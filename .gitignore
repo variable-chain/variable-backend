@@ -1,0 +1,6 @@
+node_modules/
+access.log
+cli_commands
+app.log
+error.log
+*.log
