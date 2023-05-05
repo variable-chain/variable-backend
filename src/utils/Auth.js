@@ -1,37 +1,34 @@
 const jwt = require('jsonwebtoken');
-const logger = require('../logger')('altAuth.js')
+const _ = require('lodash');
 const { errorMsgFormat } = require('./messageFormat');
-require('dotenv');
+const secret = 'thisissecretfromvariableserver'
 
 
 module.exports = async (req, res, next) => {
     try {
-        let fetchedToken = '';
-        if ('authorization' in req.headers) {
-            fetchedToken = req.headers.authorization;
-        }
-           console.log('fetchedToken:', fetchedToken);
-           let array = fetchedToken.split(" ");
-           if ((fetchedToken.length > 0) && (array[0] == "Bearer") ) {
-               if (fetchedToken.split('Bearer')[1].trim() === process.env.ALT_SECRET_KEY) {
-                   logger.info('pass');
-                   next();
-               } else {
-                   logger.error('Un-Authorised');
-                   return res.send({
-                    error: true,
-                    message: 'Un-Authorised Token',
+        let token = req.headers.authorization;
+            if (token) {
+                jwt.verify(token, secret, async (err, decode) => {
+                    if (err) {
+                       return res.send({
+                            code: 400,
+                            message: 'Invalid Token',
+                            error:err.message
+                        })
+                    } else {
+                        req.user = decode.payload;
+                        return next();
+                    }
                 })
-               }
-           } else {
-               logger.error('Un-Authorised Token FOUND!');
+            } else {
                return res.send({
-                error: true,
-                message: 'Un-Authorised Token',
-            })
-           }
-       }catch (error) {
-        logger.error('error in auth', error.message, error.stack)
+                    error: true,
+                    message: 'Token not Found',
+                })
+             
+            }
+        
+    } catch (error) {
         return res.send(errorMsgFormat(error.message, 'Auth'))
     }
 }
