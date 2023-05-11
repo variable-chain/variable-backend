@@ -2,8 +2,8 @@ const starkwareCrypto = require('@starkware-industries/starkware-crypto-utils');
 const StarkExAPI = require('@starkware-industries/starkex-js/browser');
 const Web3 = require('web3')
 const web3 = new Web3(new Web3.providers.HttpProvider('https://goerli.infura.io/v3/2ff47e51ff1f4804865ba892c7efc70c'));
-const perpetualMsgs = require("./stark-perpetual/src/services/perpetual/public/js/perpetual_messages");
-const sigLib = require("./stark-perpetual/src/starkware/crypto/signature/src/js/signature")
+const perpetualMsgs = require("./starkEx-perpetual/src/services/perpetual/public/js/perpetual_messages");
+const sigLib = require("./starkEx-perpetual/src/starkware/crypto/signature/src/js/signature")
 const {ec} = require("starknet");
 
 const starkExAPI = new StarkExAPI({
