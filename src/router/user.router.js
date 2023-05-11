@@ -16,19 +16,6 @@ router.post('/login', (req, res) => {
    
 })
 
-router.post('/register', (req, res) => {
-    try {
-        let { error } = loginValidation(req.body);
-        if (error) {
-            return res.status(400).send(validationFormat(error, 'User', 400))
-        }
-        return userController.registerUser(req, res)
-    } catch (error) {
-        return res.send(errorMsgFormat(error.message, 'User'))
-    }
-   
-})
-
 router.get('/:user_id', (req, res) => {
     return userController.getUser(req, res)
 })

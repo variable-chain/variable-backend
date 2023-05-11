@@ -18,7 +18,8 @@ const userSchema = mongoose.Schema(
         user_id: {
             type: Number,
             required: [true],
-            unique: true
+            unique: true,
+            default: 0
         }
     },
     {

@@ -5,7 +5,8 @@ const orderSchema = mongoose.Schema(
         order_id: {
             type: Number,
             required: [true],
-            unique: true
+            unique: true,
+            default: 0
         },
         status: {
             type: String,

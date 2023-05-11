@@ -21,6 +21,6 @@ const withdrawSchema = mongoose.Schema(
     }
 )
 
-const Withdraw = mongoose.model('Deposit',withdrawSchema);
+const Withdraw = mongoose.model('Withdraw',withdrawSchema);
 
 module.exports = Withdraw;

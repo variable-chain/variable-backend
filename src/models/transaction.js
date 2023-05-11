@@ -18,6 +18,10 @@ const transactionSchema = mongoose.Schema(
         transaction_type: {
             type: String,
             required: [true]
+        },
+        user_id: {
+            type: Number,
+            required: [true]
         }
     },
     {

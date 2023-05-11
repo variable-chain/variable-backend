@@ -18,6 +18,10 @@
     "lodash": "^4.17.21",
     "mongodb": "^5.4.0",
     "mongoose": "^7.1.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "starknet": "^4.22.0",
+    "web3": "^1.9.0",
+    "@starkware-industries/starkex-js": "^0.1.0",
+    "@starkware-industries/starkware-crypto-utils": "^0.0.2"
   }
 }
