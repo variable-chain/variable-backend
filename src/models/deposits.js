@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const depositSchema = mongoose.Schema(
     {
         tx_id: {
-            type: Number,
+            type: String,
             required: [true],
             unique: true
         },

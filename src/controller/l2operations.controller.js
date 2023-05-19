@@ -5,6 +5,7 @@ const Deposit = require('../models/deposits');
 const { deposit, withdraw, getPrivateKey, getTransferSignature } = require('../utils/starkex');
 const Withdraw = require('../models/withdraws');
 const Transaction = require('../models/transaction');
+const User = require('../models/user');
 
 exports.depositTransaction = async (req, res) => {
     try {
@@ -15,11 +16,15 @@ exports.depositTransaction = async (req, res) => {
             amount: amount,
             position_id: position_id
         }
-        console.log(depoistResponce)
-        const l2Operations = await Deposit.create(tx_id,calldata,"pending");
-        let query = await User.findOne({stark_address: stark_address})
-        await Transaction.create(tx_id,calldata,"pending","Deposit",query.user_id)
-        console.log(l2Operations)
+        await Deposit.create({tx_id: tx_id.toString(),calldata: calldata,status: "pending"})
+        console.log(stark_address.slice(2))
+        let query = await User.find({stark_key: stark_address.slice(2)}).then((data) => {
+            return data;
+        })
+        console.log(query)
+        await Transaction.create({tx_id: tx_id,calldata: calldata,status: "pending",transaction_type: "Deposit",user_id: query[0].user_id}).then((data)=> {
+            return data;
+        })
         return res.status(200).json(successFormat("deposit successfull"))
     } catch (error) {
         return res.send(errorMsgFormat(error.message, 'Operations', 500))

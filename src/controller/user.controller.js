@@ -19,16 +19,23 @@ exports.getUser = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-   let sign_r = req.body.sign_r;
-   let eth_address = req.body.eth_address;
+   let sign_r = req.body.sign;
+   let eth_address = req.body.eth_key;
    let starkKey = await starkex.getStarkKey(sign_r);
-   let allUsers = await User.find(function (err, data) {
-    return data
-    });
-    const isUserExists = await User.findOne({eth_address: eth_address})
+   console.log("starkKey",starkKey)
+   let allUsers = await User.find().then((data) => {
+    return data;
+   })
+    console.log("allUsers",allUsers)
+    const isUserExists = await User.findOne({eth_key: eth_address}).then((data) => {
+        return data;
+       })
+    console.log("isUser",isUserExists)
     if(isUserExists) return res.status(409).json(errorMsgFormat("user already exists"))
     let userId = (allUsers.length > 0) ? (allUsers[allUsers.length - 1].user_id + 1) : 1;
-    const user = await User.create(eth_address,sign_r,starkKey,userId);
+    const user = await User.create({eth_key: eth_address,sign: sign_r,stark_key: starkKey,user_id: userId}).then((data) => {
+        return data;
+       })
     console.log(user)
     return res.status(201).json(successFormat("User created Successfully"))
 };

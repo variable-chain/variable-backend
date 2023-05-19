@@ -5,7 +5,10 @@ const transactionSchema = mongoose.Schema(
         tx_id: {
             type: Number,
             required: [true],
-            unique: true
+            unique: true,
+            require: true, 
+            index:true,
+            sparse:true
         },
         calldata: {
             type: Object,

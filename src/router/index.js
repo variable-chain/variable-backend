@@ -6,7 +6,7 @@ const liquidationRoute = require('./liquidation.router');
 const orderRoute = require('./order.router');
 const transactionRoute = require('./transaction.router')
 
-router.use('/users',userRoute)
+router.use('/user',userRoute)
 router.use('/funding',fundingRoute)
 router.use('/l2operation', l2operationRoute)
 router.use('/liquidation', liquidationRoute)

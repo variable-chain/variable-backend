@@ -14,6 +14,7 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/api/v1/variable', (req, res, next) => {
+    console.log('vvvvvv')
     next();
 }, router);
 
