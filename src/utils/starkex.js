@@ -8,7 +8,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider('https://goerli.infura.io/
 const {ec} = require("starknet");
 
 const starkExAPI = new StarkExAPI({
-    endpoint: 'https://perpetual-playground-v2.starkex.co'
+    endpoint: 'https://perpetual-playground-v3.starkex.co'
   });
 
 exports.isAlive = async () => {
@@ -29,7 +29,7 @@ exports.deposit = async (txId,amount,starkKey,postionId) => {
         postion_id: postionId
       };
       console.log(request)
-     const response = await axios.post('https://perpetual-playground-v2.starkex.co/add_transaction', {
+     const response = await axios.post('https://perpetual-playground-v3.starkex.co/add_transaction', {
             tx_id: txId,
             tx: {
             position_id: postionId.toString(),

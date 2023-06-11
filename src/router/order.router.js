@@ -16,6 +16,17 @@ router.post('/trade', auth, (req, res)=> {
     }
 })
 
+router.post('/matchOrder', auth, (req, res)=> {
+    try {
+        if (error) {
+            return res.status(400).send(validationFormat(error, 'Order', 400))
+        }
+        return orderController.matchOrderTransaction(req, res)
+    } catch (error) {
+        return res.send(errorMsgFormat(error.message, 'Order'))
+    }
+})
+
 router.post('/buy', auth, (req, res)=> {
     try {
         let { error } = buyValidation(req.body);

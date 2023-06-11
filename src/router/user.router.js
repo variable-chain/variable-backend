@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const userController = require('../controller/user.controller');
+const { UserBalances } = require('../utils/balance');
 const { errorMsgFormat, validationFormat } = require('../utils/messageFormat');
-const { loginValidation } = require('../validation/user.validation');
+const { loginValidation, balanceValidation } = require('../validation/user.validation');
+const userBalance = new UserBalances();
 
 router.post('/login', (req, res) => {
     try {
@@ -16,16 +18,21 @@ router.post('/login', (req, res) => {
    
 })
 
+router.get('/balance', (req, res) => {
+    try {
+        let { error } = balanceValidation(req.body);
+        if (error) {
+            return res.status(400).send(validationFormat(error, 'Balance', 400))
+        }
+        return userBalance.getBalance(req.body.userId,req.body.asset)
+    } catch (error) {
+        return res.send(errorMsgFormat(error.message, 'Balance'))
+    }
+   
+})
+
 router.get('/:user_id', (req, res) => {
     return userController.getUser(req, res)
-})
-
-router.put('/update', (req, res) => {
-    return userController.updateUser(req, res)
-})
-
-router.delete('/delete', (req, res) => {
-    return userController.deleteUser(req, res)
 })
 
 module.exports = router

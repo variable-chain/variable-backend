@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const router = require('./src/router')
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -14,7 +14,6 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/api/v1/variable', (req, res, next) => {
-    console.log('vvvvvv')
     next();
 }, router);
 

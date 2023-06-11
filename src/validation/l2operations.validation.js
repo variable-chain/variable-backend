@@ -36,7 +36,8 @@ exports.withdrawValidation = (req) => {
         postion_id: joi.number().required(),
         amount: joi.number().required(),
         transactionType: joi.number().required(),
-        asset: joi.string().required()
+        asset: joi.string().required(),
+        tx_id: joi.number().required()
     }));
     return schema.validate(req, {abortEarly: false});
 }

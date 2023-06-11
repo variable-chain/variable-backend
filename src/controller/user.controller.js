@@ -39,21 +39,3 @@ exports.login = async (req, res) => {
     console.log(user)
     return res.status(201).json(successFormat("User created Successfully"))
 };
-
-exports.deleteUser = async (req, res) => {
-    if(req.body.eth_address){
-        await User.findOneAndDelete({eth_address: req.body.eth_address})
-        return res.status(200).json("user deleted")
-   }
-   else if (req.body.stark_address){
-        await User.findOneAndDelete({stark_address: req.body.stark_address})
-        return res.status(200).json("user deleted")
-   }
-   else {
-    return res.status(409).json("user not exists");
-   }
-};
-
-exports.updateUser = async (req, res) => {
-    
-};

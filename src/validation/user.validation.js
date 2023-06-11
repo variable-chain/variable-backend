@@ -7,3 +7,11 @@ exports.loginValidation = (req) => {
     }));
     return schema.validate(req, {abortEarly: false});
 }
+
+exports.balanceValidation = (req) => {
+    let schema = joi.object().keys(Object.assign({
+        userId: joi.string().required(),
+        asset: joi.string().required()
+    }));
+    return schema.validate(req, {abortEarly: false});
+}

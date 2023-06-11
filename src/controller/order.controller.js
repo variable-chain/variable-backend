@@ -4,6 +4,9 @@ const { errorMsgFormat, successFormat } = require('../utils/messageFormat');
 const Order = require('../models/orders');
 const { trade } = require('../utils/starkex');
 const Transaction = require('../models/transaction');
+const OrderBook = require('../utils/orderbook');
+const orderBook = new OrderBook();
+const MatchOrder = require('../models/match-orders');
 
 exports.getBuyTransaction = async (req, res) => {
     try {
@@ -51,11 +54,28 @@ exports.sellTransaction = async (req, res) => {
             return data
             });
         let orderId = (allOrders.length > 0) ? (allOrders[allOrders.length - 1].order_id + 1) : 1;
+        orderBook.addOrder(req.body)
         const sellOrder = await Order.create(orderId,status,calldata,type,user_id);
         console.log(sellOrder)
         return res.status(200).json(successFormat("Sell transaction created successfully"))
     } catch (error) {
         return res.send(errorMsgFormat(error.message, 'Order', 500))
+    }
+};
+
+exports.matchOrderTransaction = async (req, res) => {
+    try {
+        const {type} = req.body
+        let allOrders = await MatchOrder.find(function (err, data) {
+            return data
+            });
+        let orderId = (allOrders.length > 0) ? (allOrders[allOrders.length - 1].order_id + 1) : 1;
+        const matchOrder = orderBook.updateOrderBook(req.body)
+        const sellOrder = await MatchOrder.create(orderId,matchOrder,type);
+        console.log(sellOrder)
+        return res.status(200).json(successFormat("Match order completed"))
+    } catch (error) {
+        return res.send(errorMsgFormat(error.message, 'MatchOrder', 500))
     }
 };
 
@@ -125,6 +145,7 @@ exports.buyTransaction = async (req, res) => {
             return data
             });
         let orderId = (allOrders.length > 0) ? (allOrders[allOrders.length - 1].order_id + 1) : 1;
+        orderBook.addOrder(req.body)
         const buyOrder = await Order.create(orderId,status,calldata,type,user_id);
         console.log(buyOrder)
         return res.status(200).json(successFormat("Buy transaction created successfully"))
