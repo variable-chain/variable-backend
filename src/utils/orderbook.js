@@ -1,8 +1,10 @@
 // OrderBook class
 class OrderBook {
     constructor() {
-      this.bids = new SkipList();
-      this.asks = new SkipList();
+    //   this.bids = new SkipList();
+    //   this.asks = new SkipList();
+      this.bids = {};
+      this.asks = {};
       this.openPositions = new Map();
       this.feePercentage = 0.1; // Example fee percentage, adjust as needed
     }

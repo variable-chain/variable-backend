@@ -28,7 +28,7 @@ router.get('/user/:user_id', (req, res) => {
     return transactionController.getTransactionsByUser(req, res)
 })
 
-router.get('/:transaction_id', (req, res) => {
+router.get('/getTransaction', (req, res) => {
     return transactionController.getTransaction(req, res)
 })
 

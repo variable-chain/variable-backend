@@ -1,5 +1,5 @@
 // Class representing user balances
-export class UserBalances {
+class UserBalances {
     constructor() {
       this.balances = {};
     }
@@ -42,3 +42,5 @@ export class UserBalances {
       return this.balances[userId][asset] >= amount;
     }
   }
+
+  module.exports = UserBalances;
